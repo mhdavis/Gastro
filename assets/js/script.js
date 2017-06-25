@@ -31,7 +31,6 @@ POTENTIAL FEATURES:
 1 - Input Number of Users
 --------------------------------------------------------------------------------
 */
-
 // prompt the user for the number of users
 let numOfUsers = prompt('how many users?');
 let userArray = [];
@@ -44,7 +43,7 @@ function User(name, vote, votedFor) {
   this.getName = function () {return name};
 }
 
-for (var i=0; i < numOfUsers; i++) {
+for (i=0; i < numOfUsers; i++) {
   let currentUserName = prompt("Person" + JSON.stringify(i + 1) +  ": What is your name?");
   let currentUserObj = new User(currentUserName, 1, null);
   userArray.push(currentUserObj);
@@ -61,13 +60,25 @@ let specifiedRadius = JSON.stringify(prompt("Enter a radius:"));
 3 - Users enter a meal type (Breakfast, Brunch, Lunch, Dinner, Snack)
 --------------------------------------------------------------------------------
 */
+let mealTypeArray = ["breakfast", "brunch", "lunch", "dinner", "snack"];
+let specificMealType = determineMealType(mealTypeArray);
+
+function determineMealType(mealArr) {
+  let userMealInput = prompt("What type of meal do you plan to eat?").toLowerCase();
+
+  if (mealArr.indexOf(userMealInput) > 0) {
+    return userMealInput;
+  } else {
+    return mealType(mealArr);
+  }
+}
 
 /*
 7 - App queries google maps for restaurants in the city indicated
 --------------------------------------------------------------------------------
 */
 
-const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc";
+const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
 let placesQueryURL;
 function placeQuery(latitude, longitude, radius, type) {
