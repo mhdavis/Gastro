@@ -89,15 +89,24 @@ let cuisineArray = [
   "american",
   "german"
 ];
-let specificCuisine = determineCuisine(cuisineArray);
 
-function determineCuisine(arr) {
-  let cuisineInput = prompt("What type of meal do you plan to eat?").toLowerCase();
-  if (!arr.indexOf(userMealInput) > 0) {
-    arr.push(cuisineInput);
+function determineCuisine(arr, input) {
+  if (!arr.indexOf(input) > 0) {
+    arr.push(input);
   }
-  return cuisineInput;
+  return input;
 }
+
+for (i=0; i < userArray.length; i++) {
+  let cuisineInput = prompt(JSON.stringify(userArray[i].name) + "What type of meal do you plan to eat?").toLowerCase();
+  let currentUserCuisine = determineCuisine(cuisineArray, cuisineInput);
+  Object.defineProperty(userArray[i], 'cuisine', currentUserCuisine);
+}
+
+/*
+5 - Users can upvote or downvote cultural styles that they prefer or don't fancy
+--------------------------------------------------------------------------------
+*/
 
 /*
 7 - App queries google maps for restaurants in the city indicated
@@ -118,8 +127,6 @@ function placeQuery(latitude, longitude, radius, type) {
 }
 
 function getPlacesResults() {}
-
-
 
 let locationLatitude = '-33.8670522';
 let locationLongitude = '151.1957362';
