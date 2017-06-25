@@ -38,13 +38,15 @@ let userArray = [];
 //
 function User(name, vote, votedFor) {
   this.name = name,
-  this.vote = vote;
-  this.votedFor = null;
-  this.getName = function () {return name};
+  this.vote = vote,
+  this.votedFor = null,
+  this.getName = function() {
+    return name;
+  };
 }
 
-for (i=0; i < numOfUsers; i++) {
-  let currentUserName = prompt("Person" + JSON.stringify(i + 1) +  ": What is your name?");
+for (i = 0; i < numOfUsers; i++) {
+  let currentUserName = prompt("Person" + JSON.stringify(i + 1) + ": What is your name?");
   let currentUserObj = new User(currentUserName, 1, null);
   userArray.push(currentUserObj);
 }
@@ -63,14 +65,38 @@ let specifiedRadius = JSON.stringify(prompt("Enter a radius:"));
 let mealTypeArray = ["breakfast", "brunch", "lunch", "dinner", "snack"];
 let specificMealType = determineMealType(mealTypeArray);
 
-function determineMealType(mealArr) {
+function determineMealType(arr) {
   let userMealInput = prompt("What type of meal do you plan to eat?").toLowerCase();
-
-  if (mealArr.indexOf(userMealInput) > 0) {
+  if (arr.indexOf(userMealInput) > 0) {
     return userMealInput;
   } else {
     return mealType(mealArr);
   }
+}
+
+/*
+4 - Each user adds a cultural style
+--------------------------------------------------------------------------------
+*/
+let cuisineArray = [
+  "mexican",
+  "italian",
+  "arabic",
+  "chinese",
+  "deli",
+  "indian",
+  "french",
+  "american",
+  "german"
+];
+let specificCuisine = determineCuisine(cuisineArray);
+
+function determineCuisine(arr) {
+  let cuisineInput = prompt("What type of meal do you plan to eat?").toLowerCase();
+  if (!arr.indexOf(userMealInput) > 0) {
+    arr.push(cuisineInput);
+  }
+  return cuisineInput;
 }
 
 /*
@@ -81,12 +107,13 @@ function determineMealType(mealArr) {
 const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
 let placesQueryURL;
+
 function placeQuery(latitude, longitude, radius, type) {
   {
     this.latitude = latitude,
-    this.longitude = longitude,
-    this.radius = radius,
-    this.type = type
+      this.longitude = longitude,
+      this.radius = radius,
+      this.type = type
   };
 }
 
