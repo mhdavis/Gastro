@@ -36,20 +36,33 @@ let numOfUsers = prompt('how many users?');
 let userArray = [];
 
 //
-function User(name, vote, votedFor) {
-  this.name = name,
-  this.vote = vote,
-  this.votedFor = null,
-  this.getName = function() {
-    return name;
-  };
+function User(name) {
+  {
+  this.name = name
+  }
 }
 
 for (i = 0; i < numOfUsers; i++) {
   let currentUserName = prompt("Person" + JSON.stringify(i + 1) + ": What is your name?");
-  let currentUserObj = new User(currentUserName, 1, null);
+  let currentUserObj = new User(currentUserName);
   userArray.push(currentUserObj);
 }
+
+/*
+EXAMPLE OUTPUT
+
+[
+  {
+    name: "bob"
+  },
+  {
+    name: "jill"
+  },
+  {
+    name: "tom"
+  },
+]
+*/
 
 /*
 2 - Users input specific City and Radius
@@ -106,6 +119,87 @@ for (i=0; i < userArray.length; i++) {
 /*
 5 - Users can upvote or downvote cultural styles that they prefer or don't fancy
 --------------------------------------------------------------------------------
+*/
+
+/* Potential useful function
+function assignKey(obj, key) {
+  typeof obj[key] === 'undefined' ? obj[key] = 1 : obj[key]++;
+}
+*/
+
+// create an array of objects with all of the user's cuisine styles and their
+// corresponding number of votes;
+
+let votesTallied = talliedVotesConstructor(userArray);
+
+// arr = userArray
+function = talliedVotesConstructor(arr) {
+  // create tallied Object
+  let tallied = {};
+  // give tallied total property equal to total number of users
+  Object.defineProperty(tallied, 'total', arr.length);
+  // create a votes array of votes objects
+  let cuisineVotesArr = [];
+  // for each user
+  for (i=0; i < arr.length; i++) {
+    let filteredArray = cuisineVotesArr.filter(function () {
+      return cuisineVotersArr === arr[i].cuisine
+    });
+
+    let instanceIndex = cuisineVoteArr.indexOf(arr[i].cuisine);
+    // if a matching object is found
+    if (filteredArray.length > 0) {
+      cuisineVotesArr[instanceIndex].vote++
+    } else {
+      cuisineVotesArr.push(votesObjConstructor(arr[i].cuisine, 1);
+    }
+  }
+  // add the votes array as a property to the tallied object
+  Object.defineProperty(tallied, 'cuisineVotesArr', cuisineVotesArr);
+  // return the tallied object
+
+  return tallied;
+}
+
+
+function votesObjConstructor(cuisine, votes) {
+  {
+    this.cuisine: cuisine,
+    this.votes: votes
+  }
+}
+
+/*
+
+// EXAMPLE DATA STRUCTURE
+let talliedVotesExample = {
+  total: 5,
+  cuisineVotesArr: [
+    {
+      cuisine: "mexican",
+      votes: 2
+    },
+    {
+      cuisine: "italian",
+      votes: 1
+    },
+    {
+      cuisine: "chinese",
+      votes: 2
+    }
+  ]
+}
+
+// EXAMPLE DATA STRUCTURE ALTERNATIVE
+let talliedVotesAltExample = {
+  total: 6,
+  votes: {
+    "mexican": 1,
+    "italian": 2,
+    "chinese": 3
+  }
+}
+
 */
 
 /*
