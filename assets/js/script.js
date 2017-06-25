@@ -49,3 +49,54 @@ for (var i=0; i < numOfUsers; i++) {
   let currentUserObj = new User(currentUserName, 1, null);
   userArray.push(currentUserObj);
 }
+
+/*
+2 - Users input specific City and Radius
+--------------------------------------------------------------------------------
+*/
+let specificCity = prompt("Enter the city:").toLowerCase();
+let specifiedRadius = JSON.stringify(prompt("Enter a radius:"));
+
+/*
+3 - Users enter a meal type (Breakfast, Brunch, Lunch, Dinner, Snack)
+--------------------------------------------------------------------------------
+*/
+
+/*
+7 - App queries google maps for restaurants in the city indicated
+--------------------------------------------------------------------------------
+*/
+
+const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc";
+
+let placesQueryURL;
+function placeQuery(latitude, longitude, radius, type) {
+  {
+    this.latitude = latitude,
+    this.longitude = longitude,
+    this.radius = radius,
+    this.type = type
+  };
+}
+
+function getPlacesResults() {}
+
+
+
+let locationLatitude = '-33.8670522';
+let locationLongitude = '151.1957362';
+let locationRadius = '500';
+let locationType = 'restaurant';
+let placesQueryURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
+  locationLatitude + ',' + locationLongitude +
+  '&radius=' + locationRadius +
+  '&type=' + locationType +
+  '&keyword=cruise&key=' + apiKey;
+
+$.ajax({
+  method: "GET",
+  url: placesQueryURL
+
+}).done(function(response) {
+  return response;
+});
