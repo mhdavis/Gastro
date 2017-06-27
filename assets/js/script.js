@@ -132,7 +132,6 @@ function assignKey(obj, key) {
 
 let votesTallied = talliedVotesConstructor(userArray);
 
-// arr = userArray
 function = talliedVotesConstructor(arr) {
   // create tallied Object
   let tallied = {};
@@ -203,20 +202,55 @@ let talliedVotesAltExample = {
 */
 
 /*
+6 - App assigns probabilities to cuisine style based on the number of
+    upvotes / downvotes and randomly selects one food type to eat
+--------------------------------------------------------------------------------
+*/
+
+let groupSelectedCuisine = selectRandomCuisine(userArray);
+
+function selectRandomCuisine(arr) {
+  let randomSelectArray = [];
+  for (i=0; i < arr.length; i++) {
+    if (arr[i].hasOwnProperty('cuisine')) {
+      randomSelectArray.push(arr[i].cuisine);
+    } else {
+      return console.log("error, no property 'cuisine'")
+    }
+  }
+
+  let randomCuisine = randomSelectArray[Math.random(Math.floor() * arr.length)];
+  return randomCuisine;
+}
+
+/*
 7 - App queries google maps for restaurants in the city indicated
 --------------------------------------------------------------------------------
 */
 
+/*
+Write a function that uses google geocode api to get the longitude and latitude
+of the user city specified.
+*/
+
+
+/*
+Write a function that takes query object properties to make
+the ajax request to google places and returns the first three resulting
+restaurants by ranking
+*/
 const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
 let placesQueryURL;
 
-function placeQuery(latitude, longitude, radius, type) {
+function placeQuery(latitude, longitude, radius, type, keyword) {
   {
     this.latitude = latitude,
       this.longitude = longitude,
       this.radius = radius,
-      this.type = type
+      this.type = type,
+      this.keyword = keyword,
+      this.opennow = "opennow"
   };
 }
 
