@@ -37,9 +37,7 @@ let userArray = [];
 
 //
 function User(name) {
-  {
   this.name = name
-  }
 }
 
 for (i = 0; i < numOfUsers; i++) {
@@ -47,22 +45,6 @@ for (i = 0; i < numOfUsers; i++) {
   let currentUserObj = new User(currentUserName);
   userArray.push(currentUserObj);
 }
-
-/*
-EXAMPLE OUTPUT
-
-[
-  {
-    name: "bob"
-  },
-  {
-    name: "jill"
-  },
-  {
-    name: "tom"
-  },
-]
-*/
 
 /*
 2 - Users input specific City and Radius
@@ -76,14 +58,14 @@ let specifiedRadius = JSON.stringify(prompt("Enter a radius:"));
 --------------------------------------------------------------------------------
 */
 let mealTypeArray = ["breakfast", "brunch", "lunch", "dinner", "snack"];
-let specificMealType = determineMealType(mealTypeArray);
+let specificMealType = 'lunch';
 
 function determineMealType(arr) {
   let userMealInput = prompt("What type of meal do you plan to eat?").toLowerCase();
-  if (arr.indexOf(userMealInput) > 0) {
+  if (arr.indexOf(userMealInput) !== -1) {
     return userMealInput;
   } else {
-    return mealType(mealArr);
+    return determineMealType(arr);
   }
 }
 
@@ -104,7 +86,7 @@ let cuisineArray = [
 ];
 
 function determineCuisine(arr, input) {
-  if (!arr.indexOf(input) > 0) {
+  if (arr.indexOf(input) !== -1) {
     arr.push(input);
   }
   return input;
@@ -113,7 +95,7 @@ function determineCuisine(arr, input) {
 for (i=0; i < userArray.length; i++) {
   let cuisineInput = prompt(JSON.stringify(userArray[i].name) + "What type of meal do you plan to eat?").toLowerCase();
   let currentUserCuisine = determineCuisine(cuisineArray, cuisineInput);
-  Object.defineProperty(userArray[i], 'cuisine', currentUserCuisine);
+  userArray[i].cuisine = currentUserCuisine;
 }
 
 /*
@@ -121,74 +103,29 @@ for (i=0; i < userArray.length; i++) {
 --------------------------------------------------------------------------------
 */
 
-/* Potential useful function
-function assignKey(obj, key) {
-  typeof obj[key] === 'undefined' ? obj[key] = 1 : obj[key]++;
-}
-*/
-
 // create an array of objects with all of the user's cuisine styles and their
 // corresponding number of votes;
-
-let votesTallied = talliedVotesConstructor(userArray);
-
-function = talliedVotesConstructor(arr) {
-  // create tallied Object
-  let tallied = {};
-  // give tallied total property equal to total number of users
-  Object.defineProperty(tallied, 'total', arr.length);
-  // create a votes array of votes objects
-  let cuisineVotesArr = [];
-  // for each user
+function generateCuisineArray (arr) {
+  let cuisineArray = []
   for (i=0; i < arr.length; i++) {
-    let filteredArray = cuisineVotesArr.filter(function () {
-      return cuisineVotersArr === arr[i].cuisine
-    });
-
-    let instanceIndex = cuisineVoteArr.indexOf(arr[i].cuisine);
-    // if a matching object is found
-    if (filteredArray.length > 0) {
-      cuisineVotesArr[instanceIndex].vote++
-    } else {
-      cuisineVotesArr.push(votesObjConstructor(arr[i].cuisine, 1);
-    }
+    cuisineArray.push(arr[i].cuisine);
   }
-  // add the votes array as a property to the tallied object
-  Object.defineProperty(tallied, 'cuisineVotesArr', cuisineVotesArr);
-  // return the tallied object
-
-  return tallied;
+  return cuisineArray;
 }
 
+let selectedCuisineArray = generateCuisineArray(userArray);
 
-function votesObjConstructor(cuisine, votes) {
-  {
-    this.cuisine: cuisine,
-    this.votes: votes
+let talliedVotes = selectedCuisineArray.reduce((acc, item) => {
+  if (acc[item]) {
+    acc[item]++;
+  } else {
+    acc[item] = 1;
   }
-}
+  return acc;
+}, {});
 
+/*FOR IN LOOP - USE SECOND DATA STRUCTURE*/
 /*
-
-// EXAMPLE DATA STRUCTURE
-let talliedVotesExample = {
-  total: 5,
-  cuisineVotesArr: [
-    {
-      cuisine: "mexican",
-      votes: 2
-    },
-    {
-      cuisine: "italian",
-      votes: 1
-    },
-    {
-      cuisine: "chinese",
-      votes: 2
-    }
-  ]
-}
-
 // EXAMPLE DATA STRUCTURE ALTERNATIVE
 let talliedVotesAltExample = {
   total: 6,
@@ -198,7 +135,6 @@ let talliedVotesAltExample = {
     "chinese": 3
   }
 }
-
 */
 
 /*
@@ -207,19 +143,10 @@ let talliedVotesAltExample = {
 --------------------------------------------------------------------------------
 */
 
-let groupSelectedCuisine = selectRandomCuisine(userArray);
+let groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
 
-function selectRandomCuisine(arr) {
-  let randomSelectArray = [];
-  for (i=0; i < arr.length; i++) {
-    if (arr[i].hasOwnProperty('cuisine')) {
-      randomSelectArray.push(arr[i].cuisine);
-    } else {
-      return console.log("error, no property 'cuisine'")
-    }
-  }
-
-  let randomCuisine = randomSelectArray[Math.random(Math.floor() * arr.length)];
+function selectRandomCuisineAtRandom(arr) {
+  let randomCuisine = arr[Math.random(Math.floor() * arr.length)];
   return randomCuisine;
 }
 
@@ -243,14 +170,15 @@ const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
 let placesQueryURL;
 
-function placeQuery(latitude, longitude, radius, type, keyword) {
-  {
-    this.latitude = latitude,
-      this.longitude = longitude,
-      this.radius = radius,
-      this.type = type,
-      this.keyword = keyword,
-      this.opennow = "opennow"
+// don't use constructor, user object literal
+function placeQuery(placeLatitude, placeLongitude, placeRadius, placeType, placeKeyword) {
+  return {
+    latitude: placeLatitude,
+    longitude: placeLongitude,
+    radius: placeRadius,
+    type: placeType,
+    keyword: placeKeyword,
+    opennow: placeOpennow
   };
 }
 
