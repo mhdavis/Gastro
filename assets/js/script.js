@@ -34,23 +34,31 @@ POTENTIAL FEATURES:
 // prompt the user for the number of users
 let numOfUsers = prompt('how many users?');
 let userArray = [];
+let instance = {};
 
 //
 function User(name) {
   this.name = name
 }
 
-for (i = 0; i < numOfUsers; i++) {
+for (i=0; i < numOfUsers; i++) {
   let currentUserName = prompt("Person" + JSON.stringify(i + 1) + " : What is your name?");
   let currentUserObj = new User(currentUserName);
   userArray.push(currentUserObj);
 }
 
+instance.total_users = userArray.length;
+
 /*
 2 - Users input specific City and Radius
 --------------------------------------------------------------------------------
 */
-//let specifiedRadius = JSON.stringify(prompt("Enter a radius:"));
+let specifiedRadius = convertMilesToMeters(30);
+
+function convertMilesToMeters (miles) {
+  let meters = Math.round(miles*(50000/31.0686));
+  return meters
+}
 
 /*
 3 - Users enter a meal type (Breakfast, Brunch, Lunch, Dinner, Snack)
@@ -97,6 +105,8 @@ for (i=0; i < userArray.length; i++) {
   userArray[i].cuisine = currentUserCuisine;
 }
 
+instance.users = userArray;
+
 /*
 5 - Users can upvote or downvote cultural styles that they prefer or don't fancy
 --------------------------------------------------------------------------------
@@ -123,6 +133,7 @@ let talliedVotes = selectedCuisineArray.reduce((acc, item) => {
   return acc;
 }, {});
 
+instance.votes = talliedVotes;
 /*FOR IN LOOP - USE SECOND DATA STRUCTURE*/
 /*
 // EXAMPLE DATA STRUCTURE ALTERNATIVE
@@ -143,11 +154,15 @@ let talliedVotesAltExample = {
 */
 
 let groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
+console.log(groupSelectedCuisine);
 
 function selectCuisineAtRandom(arr) {
-  let randomCuisine = arr[Math.random(Math.floor() * arr.length)];
-  return randomCuisine;
+  let randNum = Math.floor(Math.random()*arr.length);
+  return arr[randNum];
 }
+
+instance.cuisine_chosen = groupSelectedCuisine;
+console.log(instance);
 
 /*
 7 - App queries google maps for restaurants in the city indicated
@@ -161,26 +176,17 @@ let searchOptions = {
 
 let autocomplete = new google.maps.places.Autocomplete(searchField, searchOptions);
 
-let place;
-let placeID;
+let placeName;
+let placeLat;
+let placeLng;
+
 autocomplete.addListener('place_changed', function () {
-  place = autocomplete.getPlace();
-  placeID = place.id;
-  return place;
+  let placeObj = autocomplete.getPlace();
+  placeName = placeObj.name;
+  placeLat = placeObj.geometry.location.lat();
+  placeLng = placeObj.geometry.location.lng();
 });
 
-
-/*
-Write a function that uses google geocode api to get the longitude and latitude
-of the user city specified.
-*/
-
-
-/*
-Write a function that takes query object properties to make
-the ajax request to google places and returns the first three resulting
-restaurants by ranking
-*/
 /*
 const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
