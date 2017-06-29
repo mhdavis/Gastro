@@ -33,6 +33,7 @@ POTENTIAL FEATURES:
 */
 // prompt the user for the number of users
 let numOfUsers = prompt('how many users?');
+
 let userArray = [];
 let instance = {};
 
@@ -41,6 +42,7 @@ function User(name) {
   this.name = name
 }
 
+
 for (i=0; i < numOfUsers; i++) {
   let currentUserName = prompt("Person" + JSON.stringify(i + 1) + " : What is your name?");
   let currentUserObj = new User(currentUserName);
@@ -48,6 +50,7 @@ for (i=0; i < numOfUsers; i++) {
 }
 
 instance.total_users = userArray.length;
+
 
 /*
 2 - Users input specific Radius and Price
@@ -189,26 +192,26 @@ function initialize() {
   autocomplete.addListener('place_changed', () => {
     let placeObj = autocomplete.getPlace();
     placeName = placeObj.name;
-    console.log(placeName);
     placeLat = placeObj.geometry.location.lat();
     placeLng = placeObj.geometry.location.lng();
-    console.log(placeLat);
-    console.log(placeLng);
     city = new google.maps.LatLng(placeLat, placeLng);
 
+
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 8,
+      zoom: 12,
       center: {lat: placeLat, lng: placeLng}
     });
   });
 
   document.getElementById('test-button').addEventListener('click', () => {
     let request = {
-      location: {lat: placeLat, lng: placeLng},
+      location: city,
       radius: specificRadius,
-      type: ['restaurant', specificMealType, groupSelectedCuisine],
-      minprice: groupMinPrice,
-      maxprice: groupMaxPrice
+      type: ['restaurant'],
+      minPriceLevel: groupMinPrice,
+      maxPriceLevel: groupMaxPrice,
+      openNow: true,
+      keyword: [specificMealType, groupSelectedCuisine]
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -216,9 +219,28 @@ function initialize() {
   });
 
   function callback(results, status) {
+
+    function createRestaurantEntry(place) {
+      let restaurant = $('<div>').addClass('restaurant-entry');
+      restaurant.html(
+        `
+        <h2>${place.name}</h2>
+        <p>${place.vicinity}</p>
+        <p>${place.rating}</p>
+        <p>${place.price_level}</p>
+        `
+      );
+      return restaurant;
+    }
+
     if (status == google.maps.places.PlacesServiceStatus.OK) {
+
       for (var i=0; i < results.length; i++) {
         createMarker(results[i]);
+        $("body").append(
+          createRestaurantEntry(results[i])
+        );
+
       }
     }
   }
