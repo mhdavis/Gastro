@@ -30,18 +30,25 @@
   <!-- JS -->
   <script src="assets/js/script.js"></script>
 
+
 </head>
 
 <body>
+  <script>
+// With JQuery
+$("#ex8").slider({
+  tooltip: 'always'
+});
+</script>
 
   <div class ="container">
 
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid>
       <h1 class="display-3">Gastro</h1>
       <p class="lead">No need to be "basic", let us decide where you eat.</p>
     </div>
-  
 
+    <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
 
     <div class="row">
       <div class="col-lg-6">
