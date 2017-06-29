@@ -7,10 +7,6 @@
   <meta name="viewport" content="width=device-width" , initial-scale="1.0">
   <title>Gastro</title>
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <!-- Axios -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- font -->
   <link href="https://fonts.googleapis.com/css?family=Catamaran|Chewy|Permanent+Marker" rel="stylesheet">
   <!-- Bootstrap -->
@@ -19,23 +15,34 @@
 
   <!--Firebase-->
 
-  <!-- Bootstrap JS -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
 </head>
+
+<style>
+#map = {
+  height: 400px;
+  width: 100%;
+}
+</style>
 
 <body>
   <div>
     <label>City input</label><br>
     <input id="autoid" type="text" class="Autocomplete" placeholder="Enter City Here"><br>
     <label>make API call and spit out results</label><br>
-    <button id="genObjButton" type="button" name="button">Get Results</button>
+    <button id="test-button" type="button" name="button">Get Results</button>
   </div>
+  <div id="map"></div>
 </body>
 
 <!-- JS -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc&libraries=places"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc&libraries=places&callback=initialize" async defer></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="assets/js/script.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 </html>

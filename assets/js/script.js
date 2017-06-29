@@ -53,7 +53,7 @@ instance.total_users = userArray.length;
 2 - Users input specific Radius and Price
 --------------------------------------------------------------------------------
 */
-let specifiedRadius = convertMilesToMeters(30);
+let specificRadius = convertMilesToMeters(30);
 let groupMinPrice = 1;
 let groupMaxPrice = 3;
 
@@ -170,57 +170,70 @@ console.log(instance);
 7 - App queries google maps for restaurants in the city indicated
 --------------------------------------------------------------------------------
 */
-
-let searchField = document.getElementById("autoid");
-let searchOptions = {
-  types: ['(cities)']
-};
-let autocomplete = new google.maps.places.Autocomplete(searchField, searchOptions);
-
+let map;
+let service;
+let infowindow;
+let city;
 let placeName;
 let placeLat;
-let placeLong;
+let placeLng;
 
-autocomplete.addListener('place_changed', function () {
-  let placeObj = autocomplete.getPlace();
-  placeName = placeObj.name;
-  placeLat = placeObj.geometry.location.lat();
-  placeLong = placeObj.geometry.location.lng();
-});
+function initialize() {
 
-const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
-
-/*
-function placeQuery(placeName, placeRadius, placeType, placeKeyword) {
-  return {
-    name: placeName,
-    radius: placeRadius,
-    type: placeType,
-    keyword: placeKeyword,
-    opennow: placeOpennow
+  let searchField = document.getElementById("autoid");
+  let searchOptions = {
+    types: ['(cities)']
   };
-}
-*/
+  let autocomplete = new google.maps.places.Autocomplete(searchField, searchOptions);
 
-document.getElementById("genObjButton").addEventListener("click",
- displayPlacesResults(placeLat, placeLong, specifiedRadius, groupSelectedCuisine, groupMinPrice, groupMaxPrice, apiKey));
+  autocomplete.addListener('place_changed', () => {
+    let placeObj = autocomplete.getPlace();
+    placeName = placeObj.name;
+    console.log(placeName);
+    placeLat = placeObj.geometry.location.lat();
+    placeLng = placeObj.geometry.location.lng();
+    console.log(placeLat);
+    console.log(placeLng);
+    city = new google.maps.LatLng(placeLat, placeLng);
 
-function displayPlacesResults(pLatitude, pLongitude, pRadius, pKeyword, pMinprice, pMaxprice, pKey) {
-  let queryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-  axios.get(queryURL, {
-    params: {
-      location: pLatitude+','+pLongitude,
-      radius: pRadius,
-      keyword: pKeyword,
-      minprice: pMinprice,
-      maxprice: pMaxprice,
-      key: pKey
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 8,
+      center: {lat: placeLat, lng: placeLng}
+    });
+  });
+
+  document.getElementById('test-button').addEventListener('click', () => {
+    let request = {
+      location: {lat: placeLat, lng: placeLng},
+      radius: specificRadius,
+      type: ['restaurant', specificMealType, groupSelectedCuisine],
+      minprice: groupMinPrice,
+      maxprice: groupMaxPrice
+    };
+
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
+  });
+
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i=0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
     }
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
+  }
+
+} // end intialize function
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', () => {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
   });
 }
