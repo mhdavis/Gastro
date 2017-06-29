@@ -1,0 +1,29 @@
+.container{
+  height: auto;
+  margin: 20px;
+  padding: 20px;
+  width: auto;
+  border: 1px solid gray;
+
+}
+
+.cuisineResult {
+  height: 100px;
+  width:400px;
+  margin:0px 300px;
+  background-color: #808080;
+  padding: 20px;
+  text-align: center;
+  color: #FFFF00;
+  border-radius: 10px;
+}
+
+.card{
+  margin: 20px;
+  border-radius: 10px;
+}
+.card-block{
+  background-color: #808080;
+  color: #FFFF00;
+
+}
