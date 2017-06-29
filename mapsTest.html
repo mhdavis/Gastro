@@ -9,6 +9,8 @@
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- font -->
   <link href="https://fonts.googleapis.com/css?family=Catamaran|Chewy|Permanent+Marker" rel="stylesheet">
   <!-- Bootstrap -->
@@ -25,7 +27,10 @@
 
 <body>
   <div>
-    <input id="autoid" type="text" class="Autocomplete" placeholder="Enter City Here">
+    <label>City input</label><br>
+    <input id="autoid" type="text" class="Autocomplete" placeholder="Enter City Here"><br>
+    <label>make API call and spit out results</label><br>
+    <button id="genObjButton" type="button" name="button">Get Results</button>
   </div>
 </body>
 

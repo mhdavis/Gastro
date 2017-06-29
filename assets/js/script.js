@@ -50,10 +50,13 @@ for (i=0; i < numOfUsers; i++) {
 instance.total_users = userArray.length;
 
 /*
-2 - Users input specific City and Radius
+2 - Users input specific Radius and Price
 --------------------------------------------------------------------------------
 */
 let specifiedRadius = convertMilesToMeters(30);
+let groupMinPrice = 1;
+let groupMaxPrice = 3;
+
 
 function convertMilesToMeters (miles) {
   let meters = Math.round(miles*(50000/31.0686));
@@ -154,7 +157,6 @@ let talliedVotesAltExample = {
 */
 
 let groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
-console.log(groupSelectedCuisine);
 
 function selectCuisineAtRandom(arr) {
   let randNum = Math.floor(Math.random()*arr.length);
@@ -173,51 +175,52 @@ let searchField = document.getElementById("autoid");
 let searchOptions = {
   types: ['(cities)']
 };
-
 let autocomplete = new google.maps.places.Autocomplete(searchField, searchOptions);
 
 let placeName;
 let placeLat;
-let placeLng;
+let placeLong;
 
 autocomplete.addListener('place_changed', function () {
   let placeObj = autocomplete.getPlace();
   placeName = placeObj.name;
   placeLat = placeObj.geometry.location.lat();
-  placeLng = placeObj.geometry.location.lng();
+  placeLong = placeObj.geometry.location.lng();
 });
 
-/*
 const apiKey = "AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc"
 
-// don't use constructor, user object literal
-function placeQuery(placeId placeRadius, placeType, placeKeyword) {
+/*
+function placeQuery(placeName, placeRadius, placeType, placeKeyword) {
   return {
-    id: placeId,
+    name: placeName,
     radius: placeRadius,
     type: placeType,
     keyword: placeKeyword,
     opennow: placeOpennow
   };
 }
-
-function getPlacesResults() {}
-
-let locationLatitude = '-33.8670522';
-let locationLongitude = '151.1957362';
-let locationRadius = '500';
-let locationType = 'restaurant';
-let placesQueryURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
-  locationLatitude + ',' + locationLongitude +
-  '&radius=' + locationRadius +
-  '&type=' + locationType +
-  '&keyword=cruise&key=' + apiKey;
-
-$.ajax({
-  method: "GET",
-  url: placesQueryURL
-
-}).done(function(response) {
-  return response;
-});
 */
+
+document.getElementById("genObjButton").addEventListener("click",
+ displayPlacesResults(placeLat, placeLong, specifiedRadius, groupSelectedCuisine, groupMinPrice, groupMaxPrice, apiKey));
+
+function displayPlacesResults(pLatitude, pLongitude, pRadius, pKeyword, pMinprice, pMaxprice, pKey) {
+  let queryURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+  axios.get(queryURL, {
+    params: {
+      location: pLatitude+','+pLongitude,
+      radius: pRadius,
+      keyword: pKeyword,
+      minprice: pMinprice,
+      maxprice: pMaxprice,
+      key: pKey
+    }
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
