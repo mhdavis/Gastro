@@ -11,7 +11,7 @@
   <!-- font -->
   <link href="https://fonts.googleapis.com/css?family=Catamaran|Chewy|Permanent+Marker" rel="stylesheet">
   <!-- RESET CSS -->
-  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -19,7 +19,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css"> -->
 
   <!-- Fonts -->
 
@@ -28,56 +28,63 @@
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <!-- JS -->
-  <script src="assets/js/script.js"></script>
 
 
 </head>
-
 <body>
-  <script>
-// With JQuery
-$("#ex8").slider({
-  tooltip: 'always'
-});
-</script>
-
   <div class ="container">
-
-    <div class="jumbotron jumbotron-fluid>
-      <h1 class="display-3">Gastro</h1>
-      <p class="lead">No need to be "basic", let us decide where you eat.</p>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3">Gastro</h1>
+        <p class="lead">No need to be "basic", let us decide where you eat.</p>
+      </div>
     </div>
 
-    <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+
+  <div>
 
     <div class="row">
       <div class="col-lg-6">
-       <h4>Location</h4>
+       <h5>Location</h5>
           <div class="input-group">
             <div class="input-group-btn">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              2 mile radius
-              </button>
+              <button type="button" class="btn btn-secondary dropdown-toggle radius-value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Radius</button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">5 mile radius</a>
-                <a class="dropdown-item" href="#">10 mile radius</a>
-                <a class="dropdown-item" href="#">15 mile radius</a>
+                <a class="dropdown-item five-radius" data-value="5">5 mile radius</a>
+                <a class="dropdown-item ten-radius" data-value="10">10 mile radius</a>
+                <a class="dropdown-item fifteen-radius" data-value="15">15 mile radius</a>
               </div>
             </div>
           </div>
-          <input type="text" class="form-control" aria-label="Text input with dropdown button">
+          <input type="text" class="form-control city-input" placeholder="Enter City" aria-label="Text input with dropdown button">
       </div>
+
     </div>
+
+  </div>
   <br>
   <br>
-    <button type="button" class="btn btn-outline-primary">Breakfast</button>
-    <button type="button" class="btn btn-outline-success">Brunch</button>
-    <button type="button" class="btn btn-outline-info">Lunch</button>
-    <button type="button" class="btn btn-outline-warning">Dinner</button>
+
+    <h5>Pricing</h5>
+      <div class="price-slider">
+        <input class="price-slider__range" type="range" value="3" min="0" max="4">
+        <span class="price-slider__value">0</span>
+     </div>
+  <br>
+
+    <h5>Number of People</h5>
+        <div class="form-group">
+         <input type="number" class="form-control" id="number-users" placeholder="">
+        </div>
+
+    <input type="submit" class="btn btn-info one-submit-button" value="Submit Button">
 
   </div>
 
+  <script src="firstpage.js"></script>
 
 </body>
+
+
 
 </html>
