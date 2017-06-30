@@ -95,7 +95,8 @@ let cuisineArray = [
   "indian",
   "french",
   "american",
-  "german"
+  "german",
+  "thai"
 ];
 
 function determineCuisine(arr, input) {
