@@ -7,6 +7,19 @@
 
 }
 
+.btn{
+  margin: 0px 400px;
+  color: #FFFF00 !important;
+  background-color: #808080 !important;
+}
+
+.fa{
+  margin: 0px 400px;
+  height: 200px;
+  width: 200px;
+  background:rgba(255,255,255, 0.8);
+}
+
 .cuisineResult {
   height: 100px;
   width:400px;
@@ -22,8 +35,8 @@
   margin: 20px;
   border-radius: 10px;
 }
+
 .card-block{
   background-color: #808080;
   color: #FFFF00;
-
 }
