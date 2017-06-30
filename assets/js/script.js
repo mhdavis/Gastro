@@ -173,22 +173,23 @@ console.log(instance);
 7 - App queries google maps for restaurants in the city indicated
 --------------------------------------------------------------------------------
 */
-let map;
-let service;
-let infowindow;
-let city;
-let placeName;
-let placeLat;
-let placeLng;
 
 function initialize() {
 
+  // autocomplete
   let searchField = document.getElementById("autoid");
   let searchOptions = {
     types: ['(cities)']
   };
   let autocomplete = new google.maps.places.Autocomplete(searchField, searchOptions);
 
+  let city;
+  let placeName;
+  let placeLat;
+  let placeLng;
+  let map;
+
+  // autocomplete listener
   autocomplete.addListener('place_changed', () => {
     let placeObj = autocomplete.getPlace();
     placeName = placeObj.name;
@@ -196,13 +197,15 @@ function initialize() {
     placeLng = placeObj.geometry.location.lng();
     city = new google.maps.LatLng(placeLat, placeLng);
 
-
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       center: {lat: placeLat, lng: placeLng}
     });
   });
 
+  let service;
+
+  // generate restaurants on map
   document.getElementById('test-button').addEventListener('click', () => {
     let request = {
       location: city,
@@ -220,17 +223,40 @@ function initialize() {
 
   function callback(results, status) {
 
-    function createRestaurantEntry(place) {
-      let restaurant = $('<div>').addClass('restaurant-entry');
-      restaurant.html(
-        `
-        <h2>${place.name}</h2>
+    console.log(results);
+
+    function createMarker(place) {
+
+      var restaurantIcon = {
+        url: "assets/img/restaurant.png",
+        scaledSize: new google.maps.Size(30, 30),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 0)
+      };
+
+      var marker = new google.maps.Marker({
+        map: map,
+        icon: restaurantIcon,
+        position: place.geometry.location
+      });
+
+      var formattedContent =
+      `
+      <div class="map-content">
+        <h3 class="map-title">${place.name}</h3>
         <p>${place.vicinity}</p>
-        <p>${place.rating}</p>
-        <p>${place.price_level}</p>
-        `
-      );
-      return restaurant;
+        <p><strong>Rating:</strong> ${place.rating}</p>
+        <p><strong>Price:</strong> ${place.price_level}<p>
+      </div>
+      `;
+
+      var infowindow = new google.maps.InfoWindow({
+        content: formattedContent
+      });
+
+      marker.addListener('click', () => {
+        infowindow.open(map, marker);
+      });
     }
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -240,22 +266,22 @@ function initialize() {
         $("body").append(
           createRestaurantEntry(results[i])
         );
-
       }
+
     }
   }
 
 } // end intialize function
 
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', () => {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
+function createRestaurantEntry(place) {
+  let restaurant = $('<div>').addClass('restaurant-entry card');
+  restaurant.html(
+    `
+    <h2>${place.name}</h2>
+    <p>${place.vicinity}</p>
+    <p>${place.rating}</p>
+    <p>${place.price_level}</p>
+    `
+  );
+  return restaurant;
 }
