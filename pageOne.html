@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+  <title>Gastro</title>
+  <!-- Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <!-- Fonts -->
+  <!--Firebase-->
+</head>
+
+<style>
+  .col-center {
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  footer {
+    margin: 2em 0 2em;
+  }
+</style>
+
+<body>
+
+  <div class="jumbotron jumbotron-fluid text-center">
+    <h1 class="display-3">Gastro</h1>
+  </div>
+
+  <div id="introduction-screen" class="container text-center">
+    <div class="row">
+      <div class="col-lg-4 col-center">
+        <h3>Welcome to Gastro!</h3>
+        <p>
+          Gastro aims to help groups of people decide <br> what to type of cuisine to eat in a city <br>
+        </p>
+
+        <h5>How it works:</h5>
+        <p>
+          The group specifies some parameters<br> Each individual specifies what they prefer<br> Gastro works its magic...<br> and suggest some restaurants for the group!
+        </p>
+        <button id="start-button" class="btn btn-lg btn-primary">Begin!</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-one-div" class="container text-center">
+    <div class="row">
+      <div class="col-lg-4 col-center">
+        <form class="group-submission">
+
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" class="form-control" placeholder="Enter a city!">
+          </div>
+
+          <div class="form-group">
+            <label>Group Size</label><br>
+            <input type="number" min="0" max="20">
+          </div>
+
+          <div class="form-group">
+            <label>Price</label><br>
+            <span>
+              <input type="number" min="0" max="4"> to <input type="number" min="0" max="4">
+            </span>
+            <p class="help-block">0 is cheap. 4 is pricy!</p>
+          </div>
+
+          <div class="form-group">
+            <label>Radius</label>
+            <input type="range" class="form-control" min="5" max="30" step="5" value="15" onchange="radiusOutput.value=value">
+            <output id="radiusOutput" value="15">15</output>
+            <p class="help-block">How many miles?</p>
+          </div>
+
+        </form>
+        <button id="page-one-submit" class="btn btn-lg btn-primary">Submit</button>
+      </div>
+    </div>
+<!--
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <button id="page-one-submit" class="btn btn-lg btn-primary">Submit</button>
+      </div>
+    </div> -->
+  </div>
+
+
+  <footer></footer>
+</body>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- Js -->
+<script type="text/javascript">
+  $(document).on('click', '#start-button', function(e) {
+    e.preventDefault();
+    $("#introduction-screen").fadeOut("slow", function() {
+      $("#page-one-div").fadeIn()
+    });
+  });
+
+  $(document).on('click', '#page-one-submit', function(e) {
+    e.preventDefault();
+  });
+
+  $(document).ready(function() {
+    let numberOfUsers;
+    let groupRadius;
+
+    setTimeout(1000, $("#introduction-screen").fadeIn());
+    $("#page-one-div").hide();
+
+  });
+</script>
+
+</html>
