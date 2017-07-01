@@ -32,8 +32,7 @@ POTENTIAL FEATURES:
 --------------------------------------------------------------------------------
 */
 // prompt the user for the number of users
-let numOfUsers = prompt('how many users?');
-
+let numOfUsers;
 let userArray = [];
 let instance = {};
 
@@ -67,57 +66,11 @@ function convertMilesToMeters (miles) {
 }
 
 /*
-3 - Users enter a meal type (Breakfast, Brunch, Lunch, Dinner, Snack)
---------------------------------------------------------------------------------
-*/
-let mealTypeArray = ["breakfast", "brunch", "lunch", "dinner", "snack"];
-let specificMealType = 'lunch';
-
-function determineMealType(arr) {
-  let userMealInput = prompt("What type of meal do you plan to eat?").toLowerCase();
-  if (arr.indexOf(userMealInput) !== -1) {
-    return userMealInput;
-  } else {
-    return determineMealType(arr);
-  }
-}
-
-/*
 4 - Each user adds a cultural style
 --------------------------------------------------------------------------------
 */
-let cuisineArray = [
-  "mexican",
-  "italian",
-  "arabic",
-  "chinese",
-  "deli",
-  "indian",
-  "french",
-  "american",
-  "german",
-  "thai"
-];
-
-function determineCuisine(arr, input) {
-  if (arr.indexOf(input) !== -1) {
-    arr.push(input);
-  }
-  return input;
-}
-
-for (i=0; i < userArray.length; i++) {
-  let cuisineInput = prompt(userArray[i].name + ": What type of meal do you plan to eat?").toLowerCase();
-  let currentUserCuisine = determineCuisine(cuisineArray, cuisineInput);
-  userArray[i].cuisine = currentUserCuisine;
-}
 
 instance.users = userArray;
-
-/*
-5 - Users can upvote or downvote cultural styles that they prefer or don't fancy
---------------------------------------------------------------------------------
-*/
 
 // create an array of objects with all of the user's cuisine styles and their
 // corresponding number of votes;
@@ -178,7 +131,7 @@ console.log(instance);
 function initialize() {
 
   // autocomplete
-  let searchField = document.getElementById("autoid");
+  let searchField = document.getElementById("city-input");
   let searchOptions = {
     types: ['(cities)']
   };
