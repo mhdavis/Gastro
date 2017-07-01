@@ -24,9 +24,22 @@ $(document).on('click', '#page-one-submit', function(e) {
 $(document).on('click', '#page-two-submit', function(e) {
   e.preventDefault();
   $("#page-two-div").fadeOut('slow', function() {
-    $('#map').hide();
-    createUsersArray(numOfUsers);
+    //$('#map').hide();
+     userArray = createUsersArray(numOfUsers);
+     var selectedCuisineArray = generateCuisineArray(userArray);
 
+     talliedVotes = selectedCuisineArray.reduce(function(acc, item) {
+       if (acc[item]) {
+         acc[item]++;
+       } else {
+         acc[item] = 1;
+       }
+       return acc;
+     }, {});
+
+     groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
+     $("#cuisine-selected").text(groupSelectedCuisine);
+     initMap();
     $("#page-three-div").fadeIn();
   });
 });
@@ -41,9 +54,16 @@ $(document).ready(function() {
   let groupMinPrice;
   let groupMaxPrice;
 
+  // group related gastro output
+  let userArray;
+  let groupSelectedCuisine;
+  let talliedVotes;
+
   // map generator inputs
   let cityCoords;
-  let placeName, placeLat, placeLng;
+  let placeName;
+  let placeLat;
+  let placeLng;
   let map;
   let service;
 
@@ -66,78 +86,90 @@ $(document).ready(function() {
     placeLat = placeObj.geometry.location.lat();
     placeLng = placeObj.geometry.location.lng();
     cityCoords = new google.maps.LatLng(placeLat, placeLng);
+    console.log("autocomplete placeLat: " + placeLat);
+    console.log("autocomplete placeL: " + placeLng);
+    console.log("autocomplete cityCoords: " + cityCoords);
   });
 
-  function initialize() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: {
-        lat: placeLat,
-        lng: placeLng
-      }
-    });
-
-    let request = {
-      location: cityCoords,
-      radius: groupRadius,
-      type: ['restaurant'],
-      minPriceLevel: groupMinPrice,
-      maxPriceLevel: groupMaxPrice,
-      openNow: true,
-      keyword: [specificMealType, groupSelectedCuisine]
-    };
-
-    function callback(results, status) {
-      function createMarker(place) {
-
-        var restaurantIcon = {
-          url: "assets/img/restaurant.png",
-          scaledSize: new google.maps.Size(30, 30),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(0, 0)
-        };
-
-        var marker = new google.maps.Marker({
-          map: map,
-          icon: restaurantIcon,
-          position: place.geometry.location
-        });
-
-        var formattedContent =
-        `
-        <div class="map-content">
-          <h3 class="map-title">${place.name}</h3>
-          <p>${place.vicinity}</p>
-          <p><strong>Rating:</strong> ${place.rating}</p>
-          <p><strong>Price:</strong> ${place.price_level}<p>
-        </div>
-        `;
-
-        var infowindow = new google.maps.InfoWindow({
-          content: formattedContent
-        });
-
-        marker.addListener('click', () => {
-          infowindow.open(map, marker);
-        });
-      }
-
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-
-        for (var i=0; i < results.length; i++) {
-          createMarker(results[i]);
-          $("body").append(
-            createRestaurantEntry(results[i])
-          );
-        }
-
-      }
-    }
-
-  }
 });
 
 // FUNCTIONS
+
+function initMap() {
+  console.log("it works! I'm inside the initMap function");
+  // console.log("initMap placeLat: " + placeLat);
+  // console.log("initMap placeng: " + placeLng);
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    center: cityCoords
+    // {
+    //   lat: placeLat,
+    //   lng: placeLng
+    // }
+  });
+
+  let request = {
+    location: cityCoords,
+    radius: groupRadius,
+    type: ['restaurant'],
+    minPriceLevel: groupMinPrice,
+    maxPriceLevel: groupMaxPrice,
+    openNow: true,
+    keyword: [groupSelectedCuisine]
+  };
+
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+
+  function callback(results, status) {
+
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+      for (var i=0; i < 3; i++) {
+        createMarker(map, results[i]);
+        $("#page-three-deck").append(createRestaurantCard(results[i]));
+      }
+
+    }
+  }
+
+}
+
+function createMarker(map, place) {
+
+  var restaurantIcon = {
+    url: "assets/img/restaurant.png",
+    scaledSize: new google.maps.Size(30, 30),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(0, 0)
+  };
+
+  var marker = new google.maps.Marker({
+    map: map,
+    icon: restaurantIcon,
+    position: place.geometry.location
+  });
+
+  var formattedContent =
+  `
+  <div class="map-content">
+    <h3 class="map-title">${place.name}</h3>
+    <p>${place.vicinity}</p>
+    <p><strong>Rating:</strong> ${place.rating}</p>
+    <p><strong>Price:</strong> ${place.price_level}<p>
+  </div>
+  `;
+
+  var infowindow = new google.maps.InfoWindow({
+    content: formattedContent
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+}
+
 function parseGroupSubmission() {
   groupCity = document.getElementById('city-input').value;
   numOfUsers = document.getElementById('group-size-input').value;
@@ -195,20 +227,36 @@ function createUsersArray(totalUsers) {
   return usersArr;
 }
 
+function generateCuisineArray (arr) {
+  var cuisineArray = []
+  for (i=0; i < arr.length; i++) {
+    cuisineArray.push(arr[i].cuisine);
+  }
+  return cuisineArray;
+}
+
+function selectCuisineAtRandom(arr) {
+  let randNum = Math.floor(Math.random()*arr.length);
+  return arr[randNum];
+}
+
+
 function convertMilesToMeters(miles) {
   let meters = Math.round(miles * (50000 / 31.0686));
   return meters
 }
 
-function createRestaurantEntry(place) {
-  let restaurant = $('<div>').addClass('restaurant-entry card');
-  restaurant.html(
+function createResultCard(place) {
+  let restaurant =
     `
-    <h2>${place.name}</h2>
-    <p>${place.vicinity}</p>
-    <p>${place.rating}</p>
-    <p>${place.price_level}</p>
-    `
-  );
+    <div class="card">
+      <div class="card-block restaurant-entry">
+        <h4 class="card-title restaurant-name">${place.name}</h4>
+        <p class="restaurant-address">${place.vicinity}</p>
+        <p class="restaurant-rating">Rating: ${place.rating}</p>
+        <p class="restuarant-price-level">Price: ${place.price_level}</p>
+      </div>
+    </div>
+    `;
   return restaurant;
 }

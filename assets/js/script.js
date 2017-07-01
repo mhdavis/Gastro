@@ -84,7 +84,7 @@ function generateCuisineArray (arr) {
 
 let selectedCuisineArray = generateCuisineArray(userArray);
 
-let talliedVotes = selectedCuisineArray.reduce((acc, item) => {
+let talliedVotes = selectedCuisineArray.reduce(function(acc, item) {
   if (acc[item]) {
     acc[item]++;
   } else {
