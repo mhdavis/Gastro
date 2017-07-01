@@ -75,7 +75,7 @@ instance.users = userArray;
 // create an array of objects with all of the user's cuisine styles and their
 // corresponding number of votes;
 function generateCuisineArray (arr) {
-  let cuisineArray = []
+  var cuisineArray = []
   for (i=0; i < arr.length; i++) {
     cuisineArray.push(arr[i].cuisine);
   }

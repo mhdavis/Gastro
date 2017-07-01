@@ -13,8 +13,7 @@ $(document).on('click', '#page-one-submit', function(e) {
   e.preventDefault();
   $("#page-one-div").fadeOut("slow", function() {
     parseGroupSubmission();
-    instance.total = numOfUsers;
-    for (var i = 0; i < numOfUsers; i++) {
+    for (var i=0; i < numOfUsers; i++) {
       $('#page-two-deck').append(submissionCard());
     }
     $("#page-two-div").fadeIn()
