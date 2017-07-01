@@ -177,8 +177,6 @@ function initialize() {
 
   function callback(results, status) {
 
-    console.log(results);
-
     function createMarker(place) {
 
       var restaurantIcon = {
