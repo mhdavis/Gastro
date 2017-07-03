@@ -39,7 +39,16 @@ $(document).on('click', '#page-two-submit', function(e) {
 
      groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
      $("#cuisine-selected").text(groupSelectedCuisine);
+
+     let cityCoords;
+     let placeName;
+     let placeLat;
+     let placeLng;
+     let map;
+     let service;
+
      initMap();
+
     $("#page-three-div").fadeIn();
   });
 });
@@ -60,12 +69,6 @@ $(document).ready(function() {
   let talliedVotes;
 
   // map generator inputs
-  let cityCoords;
-  let placeName;
-  let placeLat;
-  let placeLng;
-  let map;
-  let service;
 
   // save state
   let instance = {};
@@ -86,8 +89,6 @@ $(document).ready(function() {
     placeLat = placeObj.geometry.location.lat();
     placeLng = placeObj.geometry.location.lng();
     cityCoords = new google.maps.LatLng(placeLat, placeLng);
-    console.log("autocomplete placeLat: " + placeLat);
-    console.log("autocomplete placeL: " + placeLng);
     console.log("autocomplete cityCoords: " + cityCoords);
   });
 
@@ -103,10 +104,6 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: cityCoords
-    // {
-    //   lat: placeLat,
-    //   lng: placeLng
-    // }
   });
 
   let request = {
@@ -126,9 +123,19 @@ function initMap() {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
 
+      let resultsFiltered = results.filter(function (item) {
+        return item.rating >= 3.8;
+      });
+
+      let randomThreeRestaurants = [];
       for (var i=0; i < 3; i++) {
-        createMarker(map, results[i]);
-        $("#page-three-deck").append(createRestaurantCard(results[i]));
+        let randNum = Math.floor(Math.random()*resultsFiltered.length);
+        randomThreeRestaurants.push(results[randNum]);
+      }
+
+      for (var i=0; i < randomThreeRestaurants.length; i++) {
+        createMarker(map, resultsFiltered[i]);
+        $("#page-three-deck").append(createResultCard(randomThreeRestaurants[i]));
       }
 
     }
@@ -178,6 +185,21 @@ function parseGroupSubmission() {
   var miles = document.getElementById('radius-input').value;
   groupRadius = convertMilesToMeters(miles);
   return;
+}
+
+function createResultCard(place) {
+  let restaurant =
+    `
+    <div class="card">
+      <div class="card-block restaurant-entry">
+        <h4 class="card-title restaurant-name">${place.name}</h4>
+        <p class="restaurant-address">${place.vicinity}</p>
+        <p class="restaurant-rating">Rating: ${place.rating}</p>
+        <p class="restuarant-price-level">Price: ${place.price_level}</p>
+      </div>
+    </div>
+    `;
+  return restaurant;
 }
 
 function submissionCard() {
@@ -244,19 +266,4 @@ function selectCuisineAtRandom(arr) {
 function convertMilesToMeters(miles) {
   let meters = Math.round(miles * (50000 / 31.0686));
   return meters
-}
-
-function createResultCard(place) {
-  let restaurant =
-    `
-    <div class="card">
-      <div class="card-block restaurant-entry">
-        <h4 class="card-title restaurant-name">${place.name}</h4>
-        <p class="restaurant-address">${place.vicinity}</p>
-        <p class="restaurant-rating">Rating: ${place.rating}</p>
-        <p class="restuarant-price-level">Price: ${place.price_level}</p>
-      </div>
-    </div>
-    `;
-  return restaurant;
 }
