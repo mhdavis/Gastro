@@ -97,9 +97,6 @@ $(document).ready(function() {
 // FUNCTIONS
 
 function initMap() {
-  console.log("it works! I'm inside the initMap function");
-  // console.log("initMap placeLat: " + placeLat);
-  // console.log("initMap placeng: " + placeLng);
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
