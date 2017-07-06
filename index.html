@@ -5,29 +5,119 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width" , initial-scale="1.0">
   <title>Gastro</title>
-
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <!-- font -->
-  <link href="https://fonts.googleapis.com/css?family=Catamaran|Chewy|Permanent+Marker" rel="stylesheet">
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <!-- Fonts -->
-
+  <!-- Css -->
+  <link href="assets/css/style.css" rel="stylesheet"></link>
   <!--Firebase-->
-
-  <!-- Bootstrap JS -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <!-- JS -->
-  <script src="assets/js/script.js"></script>
-
 </head>
 
 <body>
 
+  <!-- MAIN JUMBOTRON -->
+  <!-- ------------------------------------------------------------------------- -->
+  <div class="jumbotron jumbotron-fluid text-center">
+    <h1 class="display-3">Gastro</h1>
+  </div>
+
+  <!-- INTRODUCTION SCREEN -->
+  <!-- ------------------------------------------------------------------------- -->
+  <div id="introduction-screen" class="container text-center">
+    <div  class="row">
+      <div class="mx-auto co-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <h3>Welcome to Gastro!</h3>
+        <p>
+          Gastro aims to help groups of people decide <br> what to type of cuisine to eat in a city <br>
+        </p>
+
+        <h5>How it works:</h5>
+        <p>
+          The group specifies some parameters<br> Each individual specifies what they prefer<br> Gastro works its magic...<br> and suggest some restaurants for the group!
+        </p>
+        <button id="start-button" class="btn btn-lg btn-primary">Begin!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRST PAGE - GROUP SUBMISSION -->
+  <!-- ------------------------------------------------------------------------- -->
+  <div id="page-one-div" class="container text-center">
+    <div class="row">
+      <div class="mx-auto co-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <form class="group-submission">
+
+          <div class="form-group">
+            <label>City</label>
+            <input id="city-input" type="text" class="form-control" placeholder="Enter a city!">
+          </div>
+
+          <div class="form-group">
+            <label>Group Size</label><br>
+            <input id="group-size-input" type="number" min="1" max="20">
+          </div>
+
+          <div class="form-group">
+            <label>Price</label><br>
+            <span>
+              <input id="min-price-input" type="number" min="0" max="4" value="0"> to <input id="max-price-input" type="number" min="0" max="4" value="4">
+            </span>
+            <p class="help-block">0 is cheap. 4 is pricy!</p>
+          </div>
+
+          <div class="form-group">
+            <label>Radius</label>
+            <input id="radius-input" type="range" class="form-control" min="5" max="30" step="5" value="15" onchange="radiusOutput.value=value">
+            <output id="radiusOutput" value="15">15</output>
+            <p class="help-block">How many miles?</p>
+          </div>
+
+        </form>
+        <button id="page-one-submit" class="btn btn-lg btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECOND PAGE - INDIVIDUAL SUBMISSIONS -->
+  <!-- ------------------------------------------------------------------------- -->
+
+  <div id="page-two-div" class="container text-center">
+    <div class="row">
+      <div class="mx-auto col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div id="page-two-deck" class="card-deck"></div>
+        <br>
+        <button id="page-two-submit" class="btn btn-lg btn-primary">Submit All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- THIRD PAGE - RESULTS -->
+  <!-- ------------------------------------------------------------------------- -->
+
+  <div id="page-three-div" class="container text-center">
+    <div class="row">
+      <div class="mx-auto col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <h3>Cuisine Selected: <span id="cuisine-selected"></span></h3><br>
+        <div id="page-three-deck" class="card-deck"></div>
+        <br>
+        <div id="map" class="mx-auto"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <footer></footer>
 </body>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<!-- Tether -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- Google Maps API and Library -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxJI7ZR7nJGUMQXMo6ytx8Scjn443ffqc&libraries=places"></script>
+<!-- Js -->
+<script src="assets/js/script.js" type="text/javascript"></script>
 
 </html>
