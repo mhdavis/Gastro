@@ -20,7 +20,9 @@
   <!-- ------------------------------------------------------------------------- -->
   <div class="custom-jumbo jumbotron jumbotron-fluid text-center">
     <div class="title-box">
-      <h1 class="display-3"><strong>Gastro</strong></h1>
+      <div class="golden-border">
+        <h1 class="display-3"><strong>Gastro</strong></h1>
+      </div>
     </div>
   </div>
 
@@ -28,17 +30,17 @@
   <!-- ------------------------------------------------------------------------- -->
   <div id="introduction-screen" class="container text-center">
     <div  class="row">
-      <div class="mx-auto co-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <h3>Welcome to Gastro!</h3>
+      <div class="mx-auto custom-box-style co-xs-8 col-sm-8 col-md-6 col-lg-8">
+        <h3 class="custom-title-style">Welcome to Gastro!</h3>
         <p>
           Gastro aims to help groups of people decide <br> what to type of cuisine to eat in a city <br>
         </p>
 
-        <h5>How it works:</h5>
+        <h5 class="custom-title-style">How it works:</h5>
         <p>
           The group specifies some parameters<br> Each individual specifies what they prefer<br> Gastro works its magic...<br> and suggest some restaurants for the group!
         </p>
-        <button id="start-button" class="custom-button btn btn-lg">Begin!</button>
+        <button id="start-button" class="custom-button btn btn-lg">Begin</button>
       </div>
     </div>
   </div>
@@ -47,21 +49,21 @@
   <!-- ------------------------------------------------------------------------- -->
   <div id="page-one-div" class="container text-center">
     <div class="row">
-      <div class="mx-auto co-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <div class="mx-auto custom-box-style co-xs-4 col-sm-4 col-md-4 col-lg-4">
         <form class="group-submission">
 
           <div class="form-group">
-            <label>City</label>
+            <label class="custom-title-style">City</label>
             <input id="city-input" type="text" class="form-control" placeholder="Enter a city!">
           </div>
 
           <div class="form-group">
-            <label>Group Size</label><br>
+            <label class="custom-title-style">Group Size</label><br>
             <input id="group-size-input" type="number" min="1" max="20">
           </div>
 
           <div class="form-group">
-            <label>Price</label><br>
+            <label class="custom-title-style">Price</label><br>
             <span>
               <input id="min-price-input" type="number" min="0" max="4" value="0"> to <input id="max-price-input" type="number" min="0" max="4" value="4">
             </span>
@@ -69,7 +71,7 @@
           </div>
 
           <div class="form-group">
-            <label>Radius</label>
+            <label class="custom-title-style">Radius</label>
             <input id="radius-input" type="range" class="form-control" min="5" max="30" step="5" value="15" onchange="radiusOutput.value=value">
             <output id="radiusOutput" value="15">15</output>
             <p class="help-block">How many miles?</p>
@@ -86,7 +88,7 @@
 
   <div id="page-two-div" class="container text-center">
     <div class="row">
-      <div class="mx-auto col-xs-10 col-sm-10 col-md-10 col-lg-10">
+      <div class="mx-auto custom-box-style col-xs-10 col-sm-10 col-md-10 col-lg-10">
         <div id="page-two-deck" class="card-deck"></div>
         <br>
         <button id="page-two-submit" class="custom-button btn btn-lg">Submit All</button>
@@ -99,8 +101,8 @@
 
   <div id="page-three-div" class="container text-center">
     <div class="row">
-      <div class="mx-auto col-xs-10 col-sm-10 col-md-10 col-lg-10">
-        <h3>Cuisine Selected: <span id="cuisine-selected"></span></h3><br>
+      <div class="mx-auto custom-box-style col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <h3 class="custom-title-style">Cuisine Selected: <span id="cuisine-selected"></span></h3><br>
         <div id="page-three-deck" class="card-deck"></div>
         <br>
         <div id="map" class="mx-auto"></div>

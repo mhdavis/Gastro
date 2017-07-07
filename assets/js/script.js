@@ -126,7 +126,7 @@ function initMap() {
       let randomThreeRestaurants = [];
       for (var i=0; i < 3; i++) {
         let randNum = Math.floor(Math.random()*resultsFiltered.length);
-        randomThreeRestaurants.push(results[randNum]);
+        randomThreeRestaurants.push(resultsFiltered[randNum]);
       }
 
       for (var i=0; i < randomThreeRestaurants.length; i++) {
@@ -186,9 +186,9 @@ function parseGroupSubmission() {
 function createResultCard(place) {
   let restaurant =
     `
-    <div class="card">
+    <div class="card golden-border">
       <div class="card-block restaurant-entry">
-        <h4 class="card-title restaurant-name">${place.name}</h4>
+        <h4 class="card-title custom-title-style restaurant-name">${place.name}</h4>
         <p class="restaurant-address">${place.vicinity}</p>
         <p class="restaurant-rating"><strong>Rating:</strong> ${place.rating}</p>
         <p class="restuarant-price-level"><strong>Price:</strong> ${place.price_level}</p>
@@ -202,28 +202,30 @@ function submissionCard() {
   var userCard =
     `
   <div class="card custom-card-style">
-    <div class="card-block">
-      <form class="user-submission">
-        <div class="form-group">
-          <label class="card-title">Name</label><br>
-          <input name="user-name" type="text" placeholder="What should we call you?">
-        </div>
-        <div class="form-group">
-          <label class="card-title">Cuisine</label><br>
-          <select name="cuisine-option">
-            <option value="mexican">Mexican</option>
-            <option value="italian">Italian</option>
-            <option value="arabic">Arabic</option>
-            <option value="chinese">Chinese</option>
-            <option value="deli">Deli</option>
-            <option value="indian">Indian</option>
-            <option value="french">French</option>
-            <option value="american">American</option>
-            <option value="german">German</option>
-            <option value="thai">Thai</option>
-          </select>
-        </div>
-      </form>
+    <div class="golden-border">
+      <div class="card-block">
+        <form class="user-submission">
+          <div class="form-group">
+            <label class="card-title custom-title-style">Name</label><br>
+            <input name="user-name" type="text" placeholder="What should we call you?">
+          </div>
+          <div class="form-group">
+            <label class="card-title custom-title-style">Cuisine</label><br>
+            <select name="cuisine-option">
+              <option value="mexican">Mexican</option>
+              <option value="italian">Italian</option>
+              <option value="arabic">Arabic</option>
+              <option value="chinese">Chinese</option>
+              <option value="deli">Deli</option>
+              <option value="indian">Indian</option>
+              <option value="french">French</option>
+              <option value="american">American</option>
+              <option value="german">German</option>
+              <option value="thai">Thai</option>
+            </select>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   `;

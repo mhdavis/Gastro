@@ -1,6 +1,19 @@
-#map {
-  width: 400px;
-  height: 400px;
+/*
+Possible Colors:
+Gold
+rgb(255, 214, 0);
+Yellow
+rgb(255, 253, 41);
+*/
+
+body {
+  color: grey;
+  background-color: gold;
+  font-family: 'Lato', sans-serif;
+}
+
+h3, h5 {
+  color: black;
 }
 
 footer {
@@ -11,16 +24,17 @@ footer {
     background-image: url("../img/pasta.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    border-bottom: solid 2px black;
 }
 
-.title-box{
+.title-box {
   background-color: white;
   color: white;
   text-shadow:
-  -2px -2px 0 #000,
-  2px -2px 0 #000,
-  -2px 2px 0 #000,
-  2px 2px 0 #000;
+  -2px -2px 0 black,
+  2px -2px 0 black,
+  -2px 2px 0 black,
+  2px 2px 0 black;
   border: 2px solid black;
   width: 275px;
   display: center-block;
@@ -28,22 +42,44 @@ footer {
   font-family: 'Racing Sans One', cursive;
 }
 
-body {
-  color: grey;
-  font-family: 'Lato', sans-serif;
+.golden-border {
+  border: 3px solid gold;
+}
+
+.custom-title-style {
+  font-family: 'Racing Sans One', cursive;
+}
+
+.custom-box-style {
+  padding: 1.5em;
+  background-color: white;
+  border: solid 2px black;
+}
+
+.custom-card-style {
+  border: solid 2px black;
 }
 
 .custom-button {
   background-color: black;
   color: white;
+  border-radius: 0px;
+  font-family: 'Racing Sans One', cursive;
 }
 
 .custom-button:hover {
-  background-color: white;
-  color: black;
+  background-color: gold;
+  color: white;
   border: solid 1px black;
+  text-shadow:
+  -1px -1px 0 black,
+  1px -1px 0 black,
+  -1px 1px 0 black,
+  1px 1px 0 black;
 }
 
-h3, h5 {
-  color: black;
+#map {
+  width: 400px;
+  height: 400px;
+  border: solid 2px black;
 }
