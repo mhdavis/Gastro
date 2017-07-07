@@ -5,6 +5,8 @@ $(document).on('click', '#start-button', function(e) {
   e.preventDefault();
   $("#introduction-screen").fadeOut("slow", function() {
     $("#page-one-div").fadeIn()
+    database = firebase.database();
+    instance = {};
   });
 });
 
@@ -36,7 +38,12 @@ $(document).on('click', '#page-two-submit', function(e) {
        return acc;
      }, {});
 
+     instance.users = userArray;
+     instance.votes = talliedVotes;
+
      groupSelectedCuisine = selectCuisineAtRandom(selectedCuisineArray);
+     instance.cuisine_selected = groupSelectedCuisine;
+
      $("#cuisine-selected").text(groupSelectedCuisine);
 
      let cityCoords;
@@ -67,10 +74,19 @@ $(document).ready(function() {
   let groupSelectedCuisine;
   let talliedVotes;
 
-  // map generator inputs
+  // save state and firebase
+  let database;
+  let instance;
 
-  // save state
-  let instance = {};
+  var config = {
+  apiKey: "AIzaSyBIQQT9cEZh5i1OczhTGZ_NGO2ENhQ5-Jw",
+  authDomain: "gastro-app-1498357614418.firebaseapp.com",
+  databaseURL: "https://gastro-app-1498357614418.firebaseio.com",
+  projectId: "gastro-app-1498357614418",
+  storageBucket: "gastro-app-1498357614418.appspot.com",
+  messagingSenderId: "101008018647"
+};
+  firebase.initializeApp(config);
 
   $("#page-one-div").hide();
   $("#page-two-div").hide();
@@ -88,7 +104,8 @@ $(document).ready(function() {
     placeLat = placeObj.geometry.location.lat();
     placeLng = placeObj.geometry.location.lng();
     cityCoords = new google.maps.LatLng(placeLat, placeLng);
-    console.log(cityCoords);
+    console.log(instance);
+    instance.place = placeName;
   });
 
 });
@@ -134,6 +151,18 @@ function initMap() {
         $("#page-three-deck").append(createResultCard(randomThreeRestaurants[i]));
       }
 
+      let restaurantsChosen = [];
+      for (var i=0; i < randomThreeRestaurants.length; i++) {
+        let obj = {};
+        obj.name = randomThreeRestaurants[i].name;
+        obj.address = randomThreeRestaurants[i].vicinity;
+        obj.price = randomThreeRestaurants[i].price_level;
+        obj.rating = randomThreeRestaurants[i].rating;
+        restaurantsChosen.push(obj);
+      }
+      instance.selections = restaurantsChosen;
+
+      database.ref().push(instance);
     }
   }
 
