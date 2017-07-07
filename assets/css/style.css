@@ -6,3 +6,44 @@
 footer {
   margin: 2em 0 2em;
 }
+
+.custom-jumbo {
+    background-image: url("../img/pasta.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.title-box{
+  background-color: white;
+  color: white;
+  text-shadow:
+  -2px -2px 0 #000,
+  2px -2px 0 #000,
+  -2px 2px 0 #000,
+  2px 2px 0 #000;
+  border: 2px solid black;
+  width: 275px;
+  display: center-block;
+  margin: auto;
+  font-family: 'Racing Sans One', cursive;
+}
+
+body {
+  color: grey;
+  font-family: 'Lato', sans-serif;
+}
+
+.custom-button {
+  background-color: black;
+  color: white;
+}
+
+.custom-button:hover {
+  background-color: white;
+  color: black;
+  border: solid 1px black;
+}
+
+h3, h5 {
+  color: black;
+}
