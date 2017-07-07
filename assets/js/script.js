@@ -1,5 +1,29 @@
-// EVENT HANDLERS
+// VARIABLE INITIALIZATION
+// group inputs
+let groupCity;
+let numOfUsers;
+let groupRadius;
+let groupMinPrice;
+let groupMaxPrice;
 
+// group related gastro output
+let userArray;
+let groupSelectedCuisine;
+let talliedVotes;
+
+// save state and firebase
+let database;
+let instance;
+
+// maps input parameters
+let cityCoords;
+let placeName;
+let placeLat;
+let placeLng;
+let map;
+let service;
+
+// EVENT HANDLERS
 // intro screen start button event handler -DONE
 $(document).on('click', '#start-button', function(e) {
   e.preventDefault();
@@ -46,37 +70,14 @@ $(document).on('click', '#page-two-submit', function(e) {
 
      $("#cuisine-selected").text(groupSelectedCuisine);
 
-     let cityCoords;
-     let placeName;
-     let placeLat;
-     let placeLng;
-     let map;
-     let service;
-
      initMap();
 
     $("#page-three-div").fadeIn();
   });
 });
 
-
 // document ready function
 $(document).ready(function() {
-  // group inputs
-  let groupCity;
-  let numOfUsers;
-  let groupRadius;
-  let groupMinPrice;
-  let groupMaxPrice;
-
-  // group related gastro output
-  let userArray;
-  let groupSelectedCuisine;
-  let talliedVotes;
-
-  // save state and firebase
-  let database;
-  let instance;
 
   var config = {
   apiKey: "AIzaSyBIQQT9cEZh5i1OczhTGZ_NGO2ENhQ5-Jw",
@@ -104,8 +105,8 @@ $(document).ready(function() {
     placeLat = placeObj.geometry.location.lat();
     placeLng = placeObj.geometry.location.lng();
     cityCoords = new google.maps.LatLng(placeLat, placeLng);
-    console.log(instance);
     instance.place = placeName;
+    instance.coords = {lat: placeLat, lng: placeLng};
   });
 
 });
